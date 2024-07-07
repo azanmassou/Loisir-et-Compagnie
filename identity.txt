@@ -1,0 +1,127 @@
+                    
+                    
+                    
+                    Gestion d'une de Spectacle  ... Loisirs et Compagnie
+
+                        Le projet sera develloper avec Bootstrap 5 pour le cote front et Laravel 10 pour 
+                       6 le cote back ...
+
+
+                I - Comprehension Global du THEME
+
+                Le theme fut lu en profondeur autant de fois que possible et comprise dans toute la mesure du possible ... Une 
+                chasse au information s'est donc impossee ... Les datas recceuillis sont disponibles dans le doc 2 et y sont mieux organiser ...
+
+                        Voir Doc 2 ... De Google Doc Loisirs Et Compagnie... 
+
+                II - Redation du THEME ...
+
+                    ! - Redation du THEME ... La Redaction a propoment du theme ...
+
+                III - Logique de Developpement du THEME ... (Website)
+
+                    I - Mise en place de la base de donnée
+
+                        Couverture minimale
+
+                                NumSpectacle → NomSpectacle, NumArtiste
+                                NumReprésentation → NumSalle, DateReprésentation, HdebReprésentation, HfinReprésentation
+                                NumSalle → Capacité, TypeSalle
+                                NumArtiste → NomArtiste
+                                CodeTicket → Libellé
+                                CodeTicket, NumReprésentation → Montant, Nbticket
+                                NumSpectacle, NumReprésentation →
+                                NumReprésentation, NumArtiste →
+
+                        Type de dépendances fonctionnelles
+
+
+                                a. Dépendances fonctionnelles simple
+
+                                        NumSpectacle → NomSpectacle
+                                        NumReprésentation → DateReprésentation, HdebReprésentation, HfinReprésentation
+                                        NumSalle → Capacité, TypeSalle
+                                        NumArtiste → NomArtiste
+                                        CodeTicket → Libellé
+
+                                b. Dépendances fonctionnelles a sources composés
+
+                                        CodeTicket, NumReprésentation → Montant, Nbticket
+                                        NumSpectacle, NumReprésentation →
+                                        NumReprésentation, NumArtiste →
+
+                                c. Dépendances fonctionnelles avec identifiant en source et identifiant en but
+
+                                        NumSpectacle → NumArtiste
+                                        NumReprésentation → NumSalle
+                                        Modèle conceptuel de données
+                                                
+                        Algèbre relationnelle
+
+                                Spectacle(NumSpectacle, NomSpectacle)
+                                Artiste_Principale(NumSpectacle,, #NumArtiste)
+                                Représentation (NumReprésentation, #NumSalle, DateReprésentation, HdebReprésentation,
+                                HfinReprésentation)
+                                Salle (NumSalle, Capacité, TypeSalle)
+                                Artist(NumArtiste, NomArtiste)
+                                Ticket(CodeTicket, Libellé)
+                                Ticket_Représentation(#CodeTicket, #NumReprésentation, Montant, Nbticket)
+                                Liste_Representations(#NumSpectacle, #NumReprésentation)
+                                Liste_Artistes( #NumReprésentation, #NumArtiste)
+
+                    II - Dev Backend 
+
+                    III - Dev Frontend 
+
+                        Identite - Loisirs et Compagnie
+
+                            - Identity - 
+
+                                Nom de la marque ...
+
+                                    Loisirs et Compagnie
+
+                                Logo ...
+
+                                    Disponible ... voir website
+
+                                Coordonnee ...
+
+                                    Adresse ... Cotonou - Benin
+                                    E-mail ... contact@loisiretcompagnie.com 
+                                    Tel ... +229 90 - 93 - 86 -75
+
+
+                                Objectifs ... 
+
+                                    ? ... Vendre 5000 tickets
+                                    ? ... Atteindre 100000 visiteurs
+                                    ? ... Suivre l'evenement en direct
+                                    ? ... Etre le 1`er sur le marche 
+
+                                Slogant ...
+
+                                    " Un de plus pour vous "
+
+                                Vision ... 
+
+                                    "Etre la pour vous a chaque instant"
+
+                                Contrat ... 
+
+                                    Projet ... Loisirs et Compagnie 
+
+                                        Marketing ... 450 $
+                                        Frontend ... 650 $
+                                        Backend ... 800 $
+
+                                            Total ... 1800 $
+                                
+                                Autres ... 
+
+                                    voir cahier des charges ...
+
+
+
+
+
