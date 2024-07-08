@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RoleController extends Controller
 {
@@ -35,18 +36,35 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-
-        $auth = Auth::user();
+        // Log::info('Store method called');
 
         $credentials = $request->validated();
 
-       Role::create($credentials);
+        $auth = Auth::user();
 
-       $roles = Role::orderByDesc('created_at')->paginate(3);
+        //  $role = Role::create($credentials);
+        Role::create($credentials);
 
-       session()->flash('success');
+        $roles = Role::orderByDesc('created_at')->paginate(3);
+
+        session()->flash('success');
+
+        // Pour obtenir le nombre total de rôles
+        // $countRoles = Role::count();
+
+        // echo "Nombre total de rôles : " . $countRoles;
 
         return view('admin.roles.index', compact('roles', 'auth'));
+
+        // Log::info('Data validated', $credentials);
+
+        // return response()->json([
+        //     'message' => 'Données enregistrées avec succès!',
+        //     // 'request' => request()->name,
+        //     // 'roles' => $roles,
+        //     'role' => $role,
+        //     // 'auth' => $auth,
+        // ]);
     }
 
     /**

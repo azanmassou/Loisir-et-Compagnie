@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-semibold d-block">{{ $auth->username }}</span>
-                                    <small class="text-muted">Admin</small>
+                                    <small class="text-muted">{{ $auth->role->name }}</small>
                                 </div>
                             </div>
                         </a>

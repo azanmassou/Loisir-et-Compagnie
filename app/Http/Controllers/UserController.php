@@ -49,7 +49,7 @@ class UserController extends Controller
 
         $auth = Auth::user();
 
-        return view('includes.profile', compact('user', 'auth', 'roles'));
+        return view('admin.users.show', compact('user', 'auth', 'roles'));
     }
 
     /**
@@ -81,6 +81,8 @@ class UserController extends Controller
 
         $user->update($credentials);
 
+        session()->flash('success');
+
         return back();
     }
 
@@ -91,6 +93,8 @@ class UserController extends Controller
     {
         //
         $user->delete();
+
+        session()->flash('error');
 
         return to_route('users.index');
     }

@@ -118,7 +118,6 @@
                         <button class="btn btn-outline-success" onclick="javascript:void();"><i class="fas fa-share"></i> Partager
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>

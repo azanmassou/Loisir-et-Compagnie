@@ -83,7 +83,7 @@
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" value="{{old("password")}}" required/>
+                                        aria-describedby="password" value="{{old("password")}}" required autofocus/>
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     <div id="password" class="invalid-feedback">
                                         {{ $errors->first('password') }}
@@ -98,7 +98,7 @@
                         <p class="text-center">
                             {{-- <span>Already have an account?</span> --}}
                             <a href="{{route("auth.login")}}">
-                                <span>Sign in instead</span>
+                                <span>Sign in width Email</span>
                             </a>
                         </p>
                     </div>

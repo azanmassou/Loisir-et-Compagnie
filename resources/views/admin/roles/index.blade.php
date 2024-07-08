@@ -92,32 +92,61 @@
             @include('includes.paginate')
         @endif
     </div>
-    {{-- @dd(session()) --}}
-    
+
     <div class="row my-4">
+        <div class="col-lg-6 mb-4 order-0">
+            <div class="card">
+                <div class="d-flex align-items-end row">
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                            <p class="mb-4">
+                                You have done <span class="fw-bold">72%</span> more sales today. Check
+                                your new badge in
+                                your profile.
+                            </p>
+
+                            <a href="javascript:;" class="btn btn-sm btn-outline-primary">View
+                                Badges</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                            <img src="http://127.0.0.1:8000/admin/assets/img/illustrations/man-with-laptop-light.png"
+                                height="140" alt="View Badge User"
+                                data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                                data-app-light-img="illustrations/man-with-laptop-light.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-6">
             <div class="card">
-                <div class="card-header">
-                    {{-- <h5>Creer un nouveaux Role</h5> --}}
-                </div>
+                {{-- <div class="card-header">
+                    <h5>Creer un nouveaux Role</h5>
+                </div> --}}
+                <div id="responseMessage" class="mt-3"></div>
                 <div class="card-body">
-                    <form id="formAuthentication" class="mb-3" action="{{ route('roles.store') }}" method="POST">
+                    <form id="AddRoleForm" class="mb-3" method="POST" action="{{route('roles.store')}}">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">Role name</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                name="name" placeholder="Enter your name" value="{{ old('name') }}" autofocus
+                                name="name" placeholder="Enter your role name" value="{{ old('name') }}" autofocus
                                 required />
                             <div id="name" class="invalid-feedback">
                                 {{ $errors->first('name') }}
                             </div>
                         </div>
-                        <button class="btn btn-primary d-grid w-100">Add</button>
+                        <button type="submit" class="btn btn-primary d-grid w-100">Add</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     @include('includes.modal')
 

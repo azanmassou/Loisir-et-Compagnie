@@ -106,16 +106,16 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
-            if ($user->role->name === 'admin') {
+            // if ($user->role->name === 'admin') {
 
-                return redirect()->intended(route('admin.dashbord'));
-            }
+            //     return redirect()->intended(route('admin.dashbord'));
+            // }
             return redirect()->intended(route('admin.dashbord'));
         }
 
         return to_route('auth.login')->withErrors([
-            'email' => 'Oups ... Veillez entrer des valeurs corrects !!!',
-            'password' => 'Oups ... Veillez entrer des valeurs corrects !!!'
+            'email' => 'Oups ... E-mail ou mot de passe incorrect !!!',
+            'password' => 'Oups ... E-mail ou mot de passe incorrect !!!'
         ])->withInput(['email', 'password']);
     }
 
@@ -255,13 +255,16 @@ class AuthController extends Controller
         if (!$user) {
             return redirect()->route('auth.login')->withErrors(['email' => 'Session expirée. Veuillez vous reconnecter.']);
         }
-
+    
         if (Hash::check($request->password, $user->password)) {
             Auth::login($user);
             Session::forget('user_id');
-            return redirect()->intended();
+            Session::put('lastActivityTime', time());  // Mettre à jour l'activité après connexion
+            $previousUrl = Session::get('previous_url', '/dashboard');
+            Session::forget('previous_url');
+            return redirect()->intended($previousUrl);
         } else {
-            return back()->withInput(['password'])->withErrors(['password' => 'Le mot de passe est incorrect']);
+            return back()->withErrors(['password' => 'Le mot de passe est incorrect']);
         }
     }
 }

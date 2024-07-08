@@ -227,8 +227,6 @@ class PostsController extends Controller
         if (!$post) {
             return response()->json([
                 'error' => 'Post not found',
-                // 'req' => request(),
-                // 'request' => $post,
             ], 404);
         }
 
@@ -274,11 +272,6 @@ class PostsController extends Controller
                 'id' => $post->id
             ], 200);
         }
-
-
-        // dd($post);
-        // Code to handle liking the post
-        // Update post likes count in database
 
 
     }

@@ -17,12 +17,13 @@ class InactivityCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $timeout = 300; // Temps d'inactivité en secondes (30 minutes)
+        $timeout = 600; // Temps d'inactivité en secondes (10 secondes pour le test, ajustez selon vos besoins)
 
         if (Auth::check()) {
             $lastActivity = Session::get('lastActivityTime');
             if ($lastActivity && (time() - $lastActivity) > $timeout) {
                 Session::put('user_id', Auth::id());
+                Session::put('previous_url', url()->current());
                 Auth::logout();
                 Session::forget('lastActivityTime');
                 return redirect()->route('auth.auth');

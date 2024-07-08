@@ -23,7 +23,16 @@ class UpdateRoleUserRequest extends FormRequest
     {
         return [
             //
-            'role_id' => ['bail','required','integer',],
+            'role_id' => 'required|integer|exists:roles,id|unique:users,role_id|bail',
         ];
     }
+
+    // public function messages()
+    // {
+    //     return [
+    //         'role_id.unique' => 'Ce rôle vous est déjà attribué a cet utilisateur. Veuillez en choisir un autre.',
+    //     ];
+    // }
+
+    
 }
