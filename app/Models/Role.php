@@ -13,19 +13,22 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable =
+    [
+        'name',
+    ];
 
-    public function user() : HasMany
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($role) {
+            $role->users()->detach();
+        });
+    }
+
+    public function user(): HasMany
     {
         return $this->hasMany(User::class);
     }
-    public function scopeRecentRole($querry)
-    {
-        return $querry->orderByDesc('created_at');
-    }
-    public function scopeIsNotAdmin($querry)
-    {
-        return $querry->where('name', '!=', 'admin');
-    }
-   
 }

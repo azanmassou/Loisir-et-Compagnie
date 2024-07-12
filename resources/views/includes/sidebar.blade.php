@@ -2,33 +2,55 @@
 
 @php
 
-$route = request()->route()->getName();
+    $route = request()->route()->getName();
 
-$route1 = $route2 = $route3 = $route4 = $route5 = $route6 = false;
+    $route10 = $route20 = $route30 = $route40 = $route50 = $route60 = $route70 = $route80 = false;
 
-switch ($route) {
-    case 'admin.dashbord':
-        $route1 = true;
-        break;
-    case 'users.index':
-        $route2 = true;
-        break;
-    case 'users.show':
-        $route2 = true;
-        break;
-    case 'roles.index':
-        $route3 = true;
-        break;
-    case 'roles.show':
-        $route3 = true;
-        break;
+    switch ($route) {
+        case 'admin.dashbord':
+            $route10 = true;
+            break;
+        case 'users.index':
+            $route20 = true;
+            break;
+        case 'users.show':
+            $route20 = true;
+            break;
+        case 'roles.index':
+            $route30 = true;
+            break;
+        case 'roles.show':
+            $route30 = true;
+            break;
+        case 'roles.show':
+            $route30 = true;
+            break;
+        case 'roles.users':
+            $route30 = true;
+            break;
+        case 'salles.index':
+            $route40 = true;
+            break;
+        case 'salles.show':
+            $route40 = true;
+            break;
+        case 'salles.show':
+            $route40 = true;
+            break;
 
-    default:
-        $route1 = true;
-        break;
-}
+        default:
+            $route1 = true;
+            break;
+    }
 
 @endphp
+
+{{-- @if ($request->is('users*')){
+
+    @dd($route10);
+}
+    
+@endif --}}
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
@@ -89,8 +111,8 @@ switch ($route) {
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li @class(['menu-item', 'active' => $route1])>
-            <a href="{{route("admin.dashbord")}}" class="menu-link">
+        <li @class(['menu-item', 'active' => $route10])>
+            <a href="{{ route('admin.dashbord') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -132,49 +154,64 @@ switch ($route) {
             </ul>
         </li> --}}
 
-      @if ($auth->role->name = 'admin')
-          
-        <!-- Ressources -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Ressources</span></li>
-         <!-- Utilisateurs -->
-         {{-- <li @class(['menu-item', 'active' => $route2])>
-            <a href="{{route('users.index')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Utilisateurs</div>
-            </a>
-        </li>
-         <li @class(['menu-item', 'active' => $route3])>
-            <a href="{{route('users.index')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Roles</div>
-            </a>
-        </li> --}}
-        <li @class(['menu-item', 'active' => $route2 || $route3 , ])>
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Entites</div>
-            </a>
-            <ul class="menu-sub">
-                <li @class(['menu-item', 'active' => $route2])>
-                    <a href="{{route('users.index')}}" class="menu-link">
-                        <div data-i18n="Account">Utilisateurs</div>
-                    </a>
-                </li>
-                <li @class(['menu-item', 'active' => $route3])>
-                    <a href="{{route('roles.index')}}" class="menu-link">
-                        <div data-i18n="Notifications">Roles</div>
-                    </a>
-                </li>
-                <li class="menu-item" @class(['menu-item', 'active' => $route2])>
-                    <a href="pages-account-settings-connections.html" class="menu-link">
-                        <div data-i18n="Connections">Connections</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        
-         
-      @endif
+        @if ($auth->role->name = 'admin')
+            <!-- Ressources -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Entites</span></li>
+            {{-- Listes  Ressources --}}
+            <li @class([
+                'menu-item',
+                'active' =>
+                    $route20 ||
+                    $route30 ||
+                    $route40 ||
+                    $route50 ||
+                    $route60 ||
+                    $route70 ||
+                    $route80,
+            ])>
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Ressources</div>
+                </a>
+                <ul class="menu-sub">
+                    <li @class(['menu-item', 'active' => $route20])>
+                        <a href="{{ route('users.index') }}" class="menu-link">
+                            <div data-i18n="Account">Utilisateurs</div>
+                        </a>
+                    </li>
+                    <li @class(['menu-item', 'active' => $route30])>
+                        <a href="{{ route('roles.index') }}" class="menu-link">
+                            <div data-i18n="Notifications">Roles</div>
+                        </a>
+                    </li>
+                    <li @class(['menu-item', 'active' => $route40])>
+                        <a href="{{ route('salles.index') }}" class="menu-link">
+                            <div data-i18n="Connections">Salles</div>
+                        </a>
+                    </li>
+                    <li @class(['menu-item', 'active' => $route50])>
+                        <a href="{{ route('artistes.index') }}" class="menu-link">
+                            <div data-i18n="Connections">Artistes</div>
+                        </a>
+                    </li>
+                    <li @class(['menu-item', 'active' => $route60])>
+                        <a href="{{ route('tickets.index') }}" class="menu-link">
+                            <div data-i18n="Connections">Tickets</div>
+                        </a>
+                    </li>
+                    <li @class(['menu-item', 'active' => $route70])>
+                        <a href="{{ route('spectacles.index') }}" class="menu-link">
+                            <div data-i18n="Connections">Spectacles</div>
+                        </a>
+                    </li>
+                    <li @class(['menu-item', 'active' => $route80])>
+                        <a href="{{ route('representations.index') }}" class="menu-link">
+                            <div data-i18n="Connections">Representations</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endif
 
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages</span>

@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Http\Controllers\Validator;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,6 @@ class AuthController extends Controller
 
     public function doRegister(RegisterRequest $request)
     {
-
         $credentials = $request->validated();
 
         // dd($request);
@@ -48,21 +48,6 @@ class AuthController extends Controller
 
             // Récupérer l'utilisateur juste après l'avoir enregistré
             $user = User::where('email', $credentials['email'])->first();
-
-            // $admin = User::where('role_id', 1)->get();
-
-            // // dd($credentials);
-
-            // if ($user) {
-
-            //     // Mail::to($user->email)->send(new VerificationRegisterEmail($user));
-
-            //     if ($admin) {
-
-            //         // Notification::send($admin, new RegisterEmailNotification($user, $credentials['email_verified_token']));
-            //     }
-            // }
-
 
             // Auth::loginUsingId(1);
 
@@ -255,7 +240,7 @@ class AuthController extends Controller
         if (!$user) {
             return redirect()->route('auth.login')->withErrors(['email' => 'Session expirée. Veuillez vous reconnecter.']);
         }
-    
+
         if (Hash::check($request->password, $user->password)) {
             Auth::login($user);
             Session::forget('user_id');
@@ -267,4 +252,60 @@ class AuthController extends Controller
             return back()->withErrors(['password' => 'Le mot de passe est incorrect']);
         }
     }
+
+    public function available(Request $request)
+    {
+       
+        return view('available');
+    }
+
+    // public function validateName(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required|string|max:255|unique:users',
+    //     ]);
+
+    //     return $validator->fails()
+    //         ? response()->json(['errors' => $validator->errors()], 422)
+    //         : response()->json(['success' => true]);
+    // }
+
+    // public function validateEmail(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'email' => 'required|email|max:255|unique:users',
+    //     ]);
+
+    //     return $validator->fails()
+    //         ? response()->json(['errors' => $validator->errors()], 422)
+    //         : response()->json(['success' => true]);
+    // }
+
+    // public function validatePassword(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'password' => 'required|string|min:8',
+    //     ]);
+
+    //     return $validator->fails()
+    //         ? response()->json(['errors' => $validator->errors()], 422)
+    //         : response()->json(['success' => true]);
+    // }
+
+    // public function register(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required|string|max:255|unique:users',
+    //         'email' => 'required|email|max:255|unique:users',
+    //         'password' => 'required|string|min:8',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     // Register the user here...
+
+    //     return response()->json(['success' => true]);
+    // }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RollingRoleRequest;
 use App\Models\Role;
-use App\Http\Requests\StoreRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
+// use App\Http\Requests\StoreRoleRequest;
+// use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -16,11 +17,13 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $roles = Role::orderByDesc('created_at')->paginate(3);
+        $roles = Role::orderByDesc('created_at')->paginate(6);
 
         $auth = Auth::user();
 
-        return view('admin.roles.index', compact('roles', 'auth'));
+        $countRoles = Role::count();
+
+        return view('admin.roles.index', compact('roles', 'auth','countRoles'));
     }
 
     /**
@@ -29,34 +32,33 @@ class RoleController extends Controller
     public function create()
     {
         //
+        $auth = Auth::user();
+        
+        return view('admin.roles.create', compact('auth'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRoleRequest $request)
+    public function store(RollingRoleRequest $request)
     {
-        // Log::info('Store method called');
+        // 
 
         $credentials = $request->validated();
 
-        $auth = Auth::user();
+        $role = Role::create($credentials);
 
-        //  $role = Role::create($credentials);
-        Role::create($credentials);
+        // dd($role);
 
-        $roles = Role::orderByDesc('created_at')->paginate(3);
+        $roles = Role::orderByDesc('created_at')->paginate(6);
 
         session()->flash('success');
 
-        // Pour obtenir le nombre total de rôles
-        // $countRoles = Role::count();
+        $countRoles = Role::count();
 
-        // echo "Nombre total de rôles : " . $countRoles;
+        $auth = Auth::user();
 
-        return view('admin.roles.index', compact('roles', 'auth'));
-
-        // Log::info('Data validated', $credentials);
+        return to_route('roles.index');
 
         // return response()->json([
         //     'message' => 'Données enregistrées avec succès!',
@@ -73,14 +75,9 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         //
-
         $auth = Auth::user();
 
-        $users = $role->user()->orderByDesc('created_at')->paginate(7);
-
-        // dd($users);
-
-        return view('admin.roles.show', compact('users', 'auth'));
+        return view('admin.roles.show', compact('auth', 'role'));
     }
 
     /**
@@ -89,20 +86,22 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         //
-        // dd($role);
-
         $auth = Auth::user();
 
-        return to_route('roles.index');
+        return view('admin.roles.edit',compact('role', 'auth'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(RollingRoleRequest $request, Role $role)
     {
         //
-        dd($role);
+        $credentials = $request->validated();
+
+        $role->update($credentials);
+
+        session()->flash('success');
 
         return to_route('roles.index');
     }
@@ -113,15 +112,33 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
-
-        $auth = Auth::user();
+ // Detach users associated with this role
+ $role->users()->detach();
 
         $role->delete();
 
         $roles = Role::orderByDesc('created_at')->paginate(3);
 
+        $countRoles = Role::count();
+
+        $auth = Auth::user();
+
         session()->flash('success');
 
-        return view('admin.roles.index', compact('roles', 'auth'));
+        return view('admin.roles.index', compact('roles', 'auth','countRoles'));
+        // return to_route('roles.index');
+    }
+    public function usersListing(Role $role)
+    {
+        //
+    $users = $role->user()->paginate(3);
+
+        // $roles = Role::orderByDesc('created_at')->paginate(3);
+
+        // $countRoles = Role::count();
+
+        $auth = Auth::user();
+
+        return view('admin.roles.users', compact('auth','users','role'));
     }
 }

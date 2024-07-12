@@ -114,23 +114,7 @@
         $sessionStatusError = session()->has('error');
     @endphp
 
-    <style>
-        /* Style Css pour le Toast ... Animation 7s */
-        .toast.show {
-            opacity: 1;
-            transition: opacity 2s ease-in-out;
-            animation: fadeOut 1s forwards;
-            animation-delay: 7s;
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-            }
-        }
-    </style>
-
-    <div @class([
+    {{-- <div @class([
         'bs-toast toast toast-placement-ex m-2 fade bg-success top-0 end-0',
         'show' => $sessionStatusSuccess,
     ]) role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
@@ -141,21 +125,29 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">L'operation s'est deroule avec success</div>
-    </div>
+    </div> --}}
 
-    <div @class([
+    {{-- <div @class([
         'bs-toast toast toast-placement-ex m-2 fade bg-danger top-0 end-0 hide',
         'show' => $sessionStatusError,
     ]) role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
         <div class="toast-header">
             <i class="bx bx-bell me-2"></i>
             <div class="me-auto fw-semibold">Operation Succesful</div>
-            {{-- <small>11 mins ago</small> --}}
+            <small>11 mins ago</small>
             <small id="current-time"></small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">L'operation s'est deroule avec success</div>
-    </div>
+    </div> --}}
+
+    {{-- @component('components.alert', [
+        'type' => 'success',
+        'sessionStatus' => true,
+        'title' => 'Operation Succesful',
+    ])
+       L'operation s'est deroule avec success
+    @endcomponent --}}
 
     @yield('content')
 
@@ -163,56 +155,6 @@
         <a href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/" target="_blank"
             class="btn btn-danger btn-buy-now">Upgrade to Pro</a>
     </div>
-
-    {{-- Script Ajax --}}
-    <script>
-        function addRoleFunction() {
-            document
-                .getElementById("AddRoleForm")
-                .addEventListener("submit", function(event) {
-
-                    e.preventDefault();
-                    const url = "{{ route('roles.store') }}";
-
-                    const token = document.querySelector(
-                        'meta[name="csrf-token"]'
-                    ).content;
-
-                    const name = document.getElementById("name").value;
-                    fetch(url, {
-                            method: "POST",
-                            headers: {
-                                accept: "application/json",
-                                "X-CSRF-TOKEN": token,
-                                // "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                            },
-                            body: JSON.stringify({
-                                name: name,
-                            }), // Replace 1 with the actual post ID
-                        })
-                        .then((response) => {
-
-                            if (!response.ok) {
-                                throw new Error("Error server response: " + response);
-                            }
-
-                            return response.json();
-
-                        })
-                        .then((data) => {
-
-                            console.log("Happy")
-
-                        })
-                        .catch((error) => {
-                            console.error("Error server response: :" + error);
-
-                        });
-                });
-
-
-        }
-    </script>
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

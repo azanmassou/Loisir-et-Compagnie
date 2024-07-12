@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('titles')
-    Utilisateurs
+    Salles
 @endsection
 
 @section('title')
@@ -9,7 +9,32 @@
 @endsection
 
 @section('links')
-    {{$users->links()}}
+    {{ $salles->links() }}
+@endsection
+
+@section('dropdown-li')
+    <li>
+        {{-- <form action="{{ route('users.edit', ['user' => $user->id]) }}" method="post">
+            @method('PATCH')
+            @csrf
+            <button class="dropdown-item" type="submit"><i
+                    class="bx bx-edit-alt me-1"></i>Edit</button>
+        </form> --}}
+    </li>
+    {{-- <li>
+        <hr class="dropdown-divider">
+    </li> --}}
+    {{-- <li>
+        <button class="dropdown-item">
+            <a href="{{ route('salles.create') }}">Ajouter</a>
+        </button>
+    </li> --}}
+    {{-- <li>
+        <button type="button" class="dropdown-item" data-bs-toggle="modal"
+            data-bs-target="#modalCenter">
+            <i class="bx bx-trash me-1"></i> Delete
+        </button>
+    </li> --}}
 @endsection
 
 @section('contents')
@@ -17,37 +42,42 @@
     <div class="card">
         <div class="row">
             <div class="col-lg-6">
-                <h5 class="card-header">Total Utilisateurs <span @style('color:red')>{{ $countUsers}}</span></h5>
+                <h5 class="card-header">Total Salles <span @style('color:red')>{{ $countSalles }}</span><a class="mx-4" href="{{ route('salles.create') }}">Ajouter</a></h5>
             </div>
             <div class="col-lg-6">
-                
                @component('components.dropdown')
                    
                @endcomponent
             </div>
         </div>
 
-        @if ($users->isEmpty())
-            <div class="container-fluid ">
-                <div class="alert alert-warning" role="alert">Oups .... La liste des utilisateurs est vide — Reesayer !
+
+        @if ($salles->isEmpty())
+            {{-- <div class="container-fluid ">
+                @yield('add-llink')
+                <div class="alert alert-warning" role="alert">Oups .... La liste des salles est vide — Reesayer !
                 </div>
-            </div>
+            </div> --}}
         @else
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead class="table-dark">
                         <tr>
-                            <th>Username</th>
-                            <th>E-mail</th>
+                            <th>#</th>
+                            <th>TypeSalle</th>
+                            <th>Capacite</th>
                             {{-- <th>created Date</th> --}}
                             {{-- <th>Status</th> --}}
                             <th>created Date</th>
-                            <th>Role</th>
+                            {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($users as $user)
+                        @foreach ($salles as $salle)
                             <tr>
+                                <td>
+                                    {{ $salle->id }}
+                                </td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-xs pull-up">
@@ -55,10 +85,10 @@
                                                 class="rounded-circle">
                                         </div>
                                         <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><a
-                                                href="{{route('users.show', ['user' => $user->id])}}">{{ $user->username }}</a></strong>
+                                                href="{{ route('salles.show', ['salle' => $salle->id]) }}">{{ $salle->TypeSalle }}</a></strong>
                                     </div>
                                 </td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $salle->Capacite }}</td>
                                 {{-- <td>
                                     {{ $user->created_at->diffForHumans() }}
                                 </td> --}}
@@ -98,16 +128,11 @@
                                                 Delete</a>
                                         </div>
                                     </div> --}}
-                                    {{ $user->created_at->diffForHumans() }}
+                                    {{ $salle->created_at->diffForHumans() }}
                                 </td>
-                                <td><span @class([
-                                    'badge me-1',
-                                    $user->role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
-                                    // 'bg-label-default' => $user->role->name,
-                                ])>
-                                         {{ $user->role->name == 'admin' ? 'admin' : 'user' }}
-                                    </span>
-                                </td>
+                                {{-- <td>
+
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -116,6 +141,64 @@
             @include('includes.paginate')
         @endif
     </div>
+
+    <div class="row my-4">
+        <div class="col-lg-6 mb-4 order-0">
+            <div class="card">
+                <div class="d-flex align-items-end row">
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                            <p class="mb-4">
+                                You have done <span class="fw-bold">72%</span> more sales today. Check
+                                your new badge in
+                                your profile.
+                            </p>
+
+                            <a href="javascript:;" class="btn btn-sm btn-outline-primary">View
+                                Badges</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                            <img src="http://127.0.0.1:8000/admin/assets/img/illustrations/man-with-laptop-light.png"
+                                height="140" alt="View Badge User"
+                                data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                                data-app-light-img="illustrations/man-with-laptop-light.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4 order-0">
+            <div class="card">
+                <div class="d-flex align-items-end row">
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                            <p class="mb-4">
+                                You have done <span class="fw-bold">72%</span> more sales today. Check
+                                your new badge in
+                                your profile.
+                            </p>
+
+                            <a href="javascript:;" class="btn btn-sm btn-outline-primary">View
+                                Badges</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                            <img src="http://127.0.0.1:8000/admin/assets/img/illustrations/man-with-laptop-light.png"
+                                height="140" alt="View Badge User"
+                                data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                                data-app-light-img="illustrations/man-with-laptop-light.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('content')

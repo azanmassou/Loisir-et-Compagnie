@@ -19,8 +19,8 @@ class UserController extends Controller
         //
         $users = User::orderByDesc('created_at')->paginate(7);
         $auth = Auth::user();
-
-        return view('admin.users.index', compact('users', 'auth'));
+        $countUsers = User::count();
+        return view('admin.users.index', compact('users', 'auth', 'countUsers'));
     }
 
     /**
@@ -55,20 +55,49 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Request $request, User $user)
     {
         //
+        // $request->has('');
+
         return to_route("users.index");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoleUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         //
+        $creadentials = request()->validate([
+            // 'isBlocked' => 'required|string',
+            // 'email' => 'required|email',
+            // 'status' => 'required|integer',
+            // 'entreprise_id' => 'required|integer',
+        ]);
 
-        $credentials = $request->validated();
+        if ($request->has('isBlocked')) {
+
+            if ($user->isBlocked == false) {
+
+                $user->isBlocked = true;
+
+                $user->save();
+
+                session()->flash('success');
+
+                return back();
+            } else {
+
+                $user->isBlocked = false;
+
+                $user->save();
+
+                session()->flash('success');
+
+                return back();
+            }
+        }
 
         // if ($user->role->id == $credentials) {
 
@@ -77,13 +106,14 @@ class UserController extends Controller
         //     ])->withInput(['role_id']);
         // }
 
-        $credentials = $request->validated();
+        // $credentials = $request->validated();
 
-        $user->update($credentials);
+        // $user->update($credentials);
 
-        session()->flash('success');
 
-        return back();
+        // session()->flash('success');
+
+        // return back();
     }
 
     /**

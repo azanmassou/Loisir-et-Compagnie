@@ -5,107 +5,252 @@
 @endsection
 
 @section('title')
-    Details - @yield('titles') | Loisir et Compagnie
+    Dashboard - @yield('titles') | Loisir et Compagnie
 @endsection
 
-@section('links')
-    {{$users->links()}}
+@section('modal-title')
+    Confirmation - Suppression
 @endsection
+
+@section('modal-body')
+    Etes vous sur de bien vouloir supprimer
+@endsection
+
+@section('modal-content')
+    <form action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="post">
+        @method('DELETE')
+        @csrf
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+@endsection
+
+@section('profile-name')
+    <span @class([
+        'badge me-1',
+        $role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
+    ])>
+        {{ $role->name }}
+    </span>
+@endsection
+
+@section('user-id')
+    {{ $role->id }}
+@endsection
+
+@section('user-name')
+    {{ $role->id }}
+@endsection
+
+@section('user-email')
+    {{ $role->id }}
+@endsection
+
+@section('profile-detail')
+    {{-- <span @class([
+        'badge me-1',
+        $user->role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
+    ])>
+        {{ $user->role->name }}
+    </span> --}}
+@endsection
+
+@section('profile-line')
+    {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="false">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="true">Timeline</a>
+        </li>
+    </ul> --}}
+@endsection
+
+@section('profile-left')
+    {{-- <div class="profile-work">
+        <p>WORK LINK</p>
+        <a href="">Website Link</a><br />
+        <a href="">Bootsnipp Profile</a><br />
+        <a href="">Bootply Profile</a>
+        <p>SKILLS</p>
+        <a href="">Web Designer</a><br />
+        <a href="">Web Developer</a><br />
+        <a href="">WordPress</a><br />
+        <a href="">WooCommerce</a><br />
+        <a href="">PHP, .Net</a><br />
+    </div> --}}
+@endsection
+
+@section('profile-data')
+    {{-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row">
+            <div class="col-md-6">
+                <label>User Id</label>
+            </div>
+            <div class="col-md-6">
+                <p>@yield('user-id')</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Username</label>
+            </div>
+            <div class="col-md-6">
+                <p>@yield('user-username')</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Email</label>
+            </div>
+            <div class="col-md-6">
+                <p>@yield('user-email')</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Phone</label>
+            </div>
+            <div class="col-md-6">
+                <p>123 456 7890</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Profession</label>
+            </div>
+            <div class="col-md-6">
+                <p>Web Developer and Designer</p>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Experience</label>
+            </div>
+            <div class="col-md-6">
+                <p>Expert</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Hourly Rate</label>
+            </div>
+            <div class="col-md-6">
+                <p>10$/hr</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Total Projects</label>
+            </div>
+            <div class="col-md-6">
+                <p>230</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>English Level</label>
+            </div>
+            <div class="col-md-6">
+                <p>Expert</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Availability</label>
+            </div>
+            <div class="col-md-6">
+                <p>6 months</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Your Bio</label><br />
+                <p>Your detail description</p>
+            </div>
+        </div>
+    </div> --}}
+@endsection
+
+@section('dropdown-li')
+    <li>
+        {{-- <form action="{{ route('users.edit', ['user' => $user->id]) }}" method="post">
+            @method('PATCH')
+            @csrf
+            <button class="dropdown-item" type="submit"><i
+                    class="bx bx-edit-alt me-1"></i>Edit</button>
+        </form> --}}
+    </li>
+    {{-- <li>
+        <hr class="dropdown-divider">
+    </li> --}}
+    <li>
+       <a class="dropdown-item" href="{{route('roles.edit', ['role' => $role->id])}}">Edit</a>
+    </li>
+    <li>
+        <li>
+            <!-- Button triggers for the first modal -->
+            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                Delete
+            </button>
+        </li>
+    </li>
+@endsection
+
 
 @section('contents')
-    {{-- Table dark --}}
-    <div class="card">
-        <h5 class="card-header">Role - Utilisateurs</h5>
+    {{-- Composant Dropdown --}}
 
-        @if ($users->isEmpty())
-            <div class="container-fluid ">
-                <div class="alert alert-warning" role="alert">Oups .... La liste des utilisateurs associe au role est vide — Reesayer !
-                </div>
+    @component('components.modal', [
+        'id' => 'exampleModal1',
+        'title' => 'Confirmation Operation',
+    ])
+        <p>Etes vous sur de bien vouloir continuer</p>
+        @slot('footer')
+            <form action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="post">
+                @method("DELETE")
+                @csrf
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        @endslot
+    @endcomponent
+
+    {{-- @include('includes.profile') --}}
+
+    <div class="row my-4">
+        <div class="col-lg-6">
+            <div class="card">
+                {{-- <div class="card-header">
+                    <h5>Edit Role</h5>
+                </div> --}}
+                {{-- <div class="card-body">
+                    <form id="formAuthentication" class="mb-3" action="{{ route('roles.update', ['role' => $role->id]) }}"
+                        method="POST">
+                        @method('PATCH')
+                        @csrf
+                        <div class="mb-3">
+                            <label for="role_id" class="form-label">Change Role</label>
+                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" name="role_id"
+                                required>
+                                <option value="" selected disabled>-- Sélectionnez un rôle --</option>
+                                @foreach ($salles as $salle)
+                                    <option value="{{ $role->id }}"
+                                        {{ $role->id == $user->role->id ? 'selected' : '' }}>
+                                        {{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('role_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <button class="btn btn-primary d-grid w-100">Change Role</button>
+                    </form>
+                </div> --}}
             </div>
-        @else
-            <div class="table-responsive text-nowrap">
-                <table class="table">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Username</th>
-                            <th>E-mail</th>
-                            {{-- <th>created Date</th> --}}
-                            {{-- <th>Status</th> --}}
-                            <th>created Date</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        @foreach ($users as $user)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar avatar-xs pull-up">
-                                            <img src="{{ asset('admin/assets/img/avatars/5.png') }}" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                        <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><a
-                                                href="{{route('users.show', ['user' => $user->id])}}">{{ $user->username }}</a></strong>
-                                    </div>
-                                </td>
-                                <td>{{ $user->email }}</td>
-                                {{-- <td>
-                                    {{ $user->created_at->diffForHumans() }}
-                                </td> --}}
-
-                                {{-- <td><span @class([
-                                    'badge me-1',
-                                    'bg-label-success' => $user->email_verified_at != null,
-                                    'bg-label-danger' => ($user->email_verified_at = null),
-                                    'bg-label-default' => ($user->email_verified_at = null),
-                                ])>
-                                        @if ($user->email_verified_at != null)
-                                            Active
-                                        @else
-                                            Inactive
-                                        @endif
-                                    </span>
-                                </td> --}}
-                                {{-- @dd($user->role->name) --}}
-                                <td>
-                                    {{-- <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item"
-                                                href="{{ route('users.edit', ['user' => $user->id]) }}"><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</a>
-                                            <a class="dropdown-item"
-                                                href=""><i
-                                                    class="bx bxl-500px mb-2"></i>
-                                                Block</a>
-                                            <a class="dropdown-item"
-                                                href="{{ route('users.destroy', ['user' => $user->id]) }}"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
-                                        </div>
-                                    </div> --}}
-                                    {{ $user->created_at->diffForHumans() }}
-                                </td>
-                                <td><span @class([
-                                    'badge me-1',
-                                    $user->role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
-                                    // 'bg-label-default' => $user->role->name,
-                                ])>
-                                         {{ $user->role->name == 'admin' ? 'admin' : 'user' }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-            @include('includes.paginate')
-        @endif
+        </div>
     </div>
 @endsection
 
@@ -126,7 +271,6 @@
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
-
 
                         @yield('contents')
 
