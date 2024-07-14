@@ -22,7 +22,7 @@
         case 'roles.show':
             $route30 = true;
             break;
-        case 'roles.show':
+        case 'roles.create':
             $route30 = true;
             break;
         case 'roles.users':
@@ -34,9 +34,24 @@
         case 'salles.show':
             $route40 = true;
             break;
-        case 'salles.show':
-            $route40 = true;
+        case 'artistes.index':
+            $route50 = true;
             break;
+        case 'tickets.index':
+            $route60 = true;
+            break;
+        case 'spectacles.index':
+            $route70 = true;
+            break;
+        case 'representations.index':
+            $route80 = true;
+            break;
+        // case 'salles.show':
+        //     $route40 = true;
+        //     break;
+        // case 'salles.show':
+        //     $route40 = true;
+        //     break;
 
         default:
             $route1 = true;

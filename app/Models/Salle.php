@@ -14,10 +14,11 @@ class Salle extends Model
     protected $fillable =
     [
         'TypeSalle',
-        'Capacite'
+        'Capacite',
+        'representation_id'
     ];
 
-    public function representations(): BelongsTo
+    public function representation(): BelongsTo
     {
         return $this->belongsTo(Representation::class);
     }

@@ -23,7 +23,7 @@ class RoleController extends Controller
 
         $countRoles = Role::count();
 
-        return view('admin.roles.index', compact('roles', 'auth','countRoles'));
+        return view('admin.roles.index', compact('roles', 'auth', 'countRoles'));
     }
 
     /**
@@ -33,7 +33,7 @@ class RoleController extends Controller
     {
         //
         $auth = Auth::user();
-        
+
         return view('admin.roles.create', compact('auth'));
     }
 
@@ -88,7 +88,7 @@ class RoleController extends Controller
         //
         $auth = Auth::user();
 
-        return view('admin.roles.edit',compact('role', 'auth'));
+        return view('admin.roles.edit', compact('role', 'auth'));
     }
 
     /**
@@ -112,8 +112,17 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
- // Detach users associated with this role
- $role->users()->detach();
+        // Detach users associated with this role
+        // $role->users()->detach();
+
+        $this->authorize('delete', $role);
+
+        if ($role->user()->count() > 0) {
+
+            session()->flash('error');
+
+            return back();
+        }
 
         $role->delete();
 
@@ -125,13 +134,14 @@ class RoleController extends Controller
 
         session()->flash('success');
 
-        return view('admin.roles.index', compact('roles', 'auth','countRoles'));
-        // return to_route('roles.index');
+        // return view('admin.roles.index', compact('roles', 'auth', 'countRoles'));
+        return to_route('roles.index');
     }
+    
     public function usersListing(Role $role)
     {
         //
-    $users = $role->user()->paginate(3);
+        $users = $role->user()->paginate(7);
 
         // $roles = Role::orderByDesc('created_at')->paginate(3);
 
@@ -139,6 +149,6 @@ class RoleController extends Controller
 
         $auth = Auth::user();
 
-        return view('admin.roles.users', compact('auth','users','role'));
+        return view('admin.roles.users', compact('auth', 'users', 'role'));
     }
 }

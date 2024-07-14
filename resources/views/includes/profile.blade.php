@@ -20,12 +20,14 @@
                     @yield('profile-line')
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 text-end">
                 
                 @component('components.dropdown')
+
                     @slot('slot')
                         @yield('dropdown-li')
                     @endslot
+                    
                 @endcomponent
 
             </div>

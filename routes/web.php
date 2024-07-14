@@ -68,8 +68,6 @@ Route::middleware(['guest'])->group(function () {
 
 });
 
-// Route::get('/inscription', [AuthController::class, 'register'])->name('auth.register');
-//     Route::post('/inscription', [AuthController::class, 'doRegister']);
 
 
 // Authenticated routes Guest

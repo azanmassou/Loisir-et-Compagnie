@@ -1,64 +1,52 @@
 @extends('layout')
 
 @section('titles')
-    Utilisateurs
+    Salles
 @endsection
 
 @section('title')
     Dashboard - @yield('titles') | Loisir et Compagnie
 @endsection
 
-@section('dropdown-li')
-    <li>
-        <form action="{{ route('users.edit', ['user' => $user->id]) }}" method="post">
-            @method('PATCH')
-            @csrf
-            <button class="dropdown-item" type="submit"></i>Edit</button>
-        </form>
-    </li>
-    <li>
-        <hr class="dropdown-divider">
-    </li>
-    <li>
-        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-            {{ $user->isBlocked == false ? 'Block' : 'Unblock' }}
-        </button>
-    </li>
-    <li>
-        <!-- Button triggers for the first modal -->
-        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-            Delete
-        </button>
-    </li>
+@section('modal-title')
+    Confirmation - Suppression
+@endsection
+
+@section('modal-body')
+    Etes vous sur de bien vouloir supprimer
+@endsection
+
+@section('modal-content')
+    <form action="{{ route('salles.destroy', ['salle' => $salle->id]) }}" method="post">
+        @method('DELETE')
+        @csrf
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
 @endsection
 
 @section('profile-name')
-    {{ $user->username }}
+    {{ $salle->TypeSalle }}
 @endsection
 
 @section('user-id')
-    {{ $user->id }}
+    {{ $salle->id }}
 @endsection
 
-@section('user-name')
-    {{ $user->username }}
-@endsection
+{{-- @section('user-name')
+    {{ $salle->username }}
+@endsection --}}
 
-@section('user-email')
+{{-- @section('user-email')
     {{ $user->email }}
-@endsection
-
-@section('user-username')
-    {{ $user->username }}
-@endsection
+@endsection --}}
 
 @section('profile-detail')
-    <a href="{{ route('roles.show', ['role' => $user->role->id]) }}"><span @class([
+    {{-- <span @class([
         'badge me-1',
         $user->role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
     ])>
-            {{ $user->role->name }}
-        </span></a>
+        {{ $user->role->name }}
+    </span> --}}
 @endsection
 
 @section('profile-line')
@@ -75,8 +63,8 @@
 @endsection
 
 @section('profile-left')
-    <div class="profile-work">
-        {{-- <p>WORK LINK</p>
+    {{-- <div class="profile-work">
+        <p>WORK LINK</p>
         <a href="">Website Link</a><br />
         <a href="">Bootsnipp Profile</a><br />
         <a href="">Bootply Profile</a>
@@ -85,31 +73,12 @@
         <a href="">Web Developer</a><br />
         <a href="">WordPress</a><br />
         <a href="">WooCommerce</a><br />
-        <a href="">PHP, .Net</a><br /> --}}
-        <form id="formAuthentication" class="mb-3" action="{{ route('users.update', ['user' => $user->id]) }}"
-            method="POST">
-            @method('PATCH')
-            @csrf
-            <div class="mb-3">
-                {{-- <label for="role_id" class="form-label">Change Role</label> --}}
-                <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" name="role_id" required>
-                    {{-- <option value="" selected disabled>-- Sélectionnez un rôle --</option> --}}
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->id }}" {{ $role->id == $user->role->id ? 'selected' : '' }}>
-                            {{ $role->name }}</option>
-                    @endforeach
-                </select>
-                @error('role_id')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <button class="btn btn-primary d-grid w-100">Change Role</button>
-        </form>
-    </div>
+        <a href="">PHP, .Net</a><br />
+    </div> --}}
 @endsection
 
 @section('profile-data')
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    {{-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="row">
             <div class="col-md-6">
                 <label>User Id</label>
@@ -140,14 +109,6 @@
             </div>
             <div class="col-md-6">
                 <p>123 456 7890</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Status</label>
-            </div>
-            <div class="col-md-6">
-                <p>{{ $user->isBlocked == 0 ? 'Actif' : 'Inactif' }}</p>
             </div>
         </div>
         <div class="row">
@@ -206,41 +167,66 @@
                 <p>Your detail description</p>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
+@section('dropdown-li')
+    <li>
+        <form action="{{ route('salles.edit', ['salle' => $salle->id]) }}" method="post">
+            @method('PATCH')
+            @csrf
+            <button class="dropdown-item" type="submit"><i class="bx bx-edit-alt me-1"></i>Edit</button>
+        </form>
+    </li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
+    <li>
+        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalCenter">
+            <i class="bx bx-trash me-1"></i> Delete
+        </button>
+    </li>
+@endsection
+
+
 @section('contents')
+
     @include('includes.profile')
 
-    <!-- Utiliser le composant modal -->
-    @component('components.modal', [
-        'id' => 'exampleModal1',
-        'title' => 'Confirmation Operation',
-    ])
-        <p>Etes vous sur de bien vouloir continuer</p>
-        @slot('footer')
-            <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        @endslot
-    @endcomponent
+    <div class="row my-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    {{-- <h5>Edit Role</h5> --}}
+                </div>
+                <div class="card-body">
+                    <form id="formAuthentication" class="mb-3" action="{{ route('salles.update', ['salle' => $salle->id]) }}"
+                        method="POST">
+                        @method('PATCH')
+                        @csrf
+                        <div class="mb-3">
+                            <label for="role_id" class="form-label">Change Role</label>
+                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" name="role_id"
+                                required>
+                                {{-- <option value="" selected disabled>-- Sélectionnez un rôle --</option> --}}
+                                {{-- @foreach ($salles as $salle)
+                                    <option value="{{ $role->id }}"
+                                        {{ $role->id == $user->role->id ? 'selected' : '' }}>
+                                        {{ $role->name }}</option>
+                                @endforeach --}}
+                            </select>
+                            @error('role_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <button class="btn btn-primary d-grid w-100">Change Role</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Utiliser le composant modal -->
-    @component('components.modal', [
-        'id' => 'exampleModal2',
-        'title' => 'Confirmation Operation',
-    ])
-        <p>Etes vous sur de bien vouloir continuer</p>
-        @slot('footer')
-            <form action="{{ route('users.update', ['user' => $user->id]) }}" method="post">
-                <input type="hidden" name="isBlocked" value="{{ $user->isBlocked }}">
-                @method('PATCH')
-                @csrf
-                <button class="btn btn-warning" type="submit">{{ $user->isBlocked == false ? 'Block' : 'Unblock' }}</button>
-            </form>
-        @endslot
-    @endcomponent
-
+    @include('includes/modal')
 @endsection
 
 @section('content')

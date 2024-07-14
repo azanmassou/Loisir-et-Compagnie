@@ -8,6 +8,7 @@ window.addEventListener("load", function () {
     preloader.style.display = "none";
 });
 
+
 // function currentTime() {
 //     setInterval(() => {
 //         let date = new Date();
@@ -66,35 +67,35 @@ window.addEventListener("load", function () {
 //         });
 // }
 
-const url = "{{route('userss')}}";
+// const url = "{{route('users')}}";
 
-const token = document.querySelector(
-    'meta[name="csrf-token"]'
-).content;
+// const token = document.querySelector(
+//     'meta[name="csrf-token"]'
+// ).content;
 
-fetch(url, {
-    method: "POST",
-    headers: {
-        accept: "application/json",
-        "X-CSRF-TOKEN": token,
-    },
-    body: JSON.stringify({
-        type: 1,
-        // value: value,
-    }),
-})
-    .then((response) => {
-        if (response.ok) {
-            throw new Error("Error servers response: " + response);
-        }
+// fetch(url, {
+//     method: "POST",
+//     headers: {
+//         accept: "application/json",
+//         "X-CSRF-TOKEN": token,
+//     },
+//     body: JSON.stringify({
+//         type: 1,
+//         // value: value,
+//     }),
+// })
+//     .then((response) => {
+//         if (response.ok) {
+//             throw new Error("Error servers response: " + response);
+//         }
 
-        return response.json();
-    })
+//         return response.json();
+//     })
 
-    .then((data) => {
+//     .then((data) => {
     
-        console.log(data);
-    })
-    .catch((error) => {
-        console.error("Error server response: :" + error);
-    });
+//         console.log(data);
+//     })
+//     .catch((error) => {
+//         console.error("Error server response: :" + error);
+//     });

@@ -69,14 +69,12 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
-        $creadentials = request()->validate([
-            // 'isBlocked' => 'required|string',
-            // 'email' => 'required|email',
-            // 'status' => 'required|integer',
-            // 'entreprise_id' => 'required|integer',
-        ]);
-
         if ($request->has('isBlocked')) {
+
+            $creadentials = request()->validate([
+                'isBlocked' => 'required|string',
+            ]);
+    
 
             if ($user->isBlocked == false) {
 
@@ -98,22 +96,45 @@ class UserController extends Controller
                 return back();
             }
         }
+        
+        if ($request->has('role_id')) {
 
-        // if ($user->role->id == $credentials) {
+            // dd($request->role_id);
 
-        //     return back()->withErrors([
-        //         'role_id' => 'Oups ... L\'utilisateur possede deja le role !!!',
-        //     ])->withInput(['role_id']);
-        // }
+            $creadentials = request()->validate([
+                
+                'role_id' => 'required|integer|exists:roles,id|bail',
+            ]);
 
-        // $credentials = $request->validated();
+            if( $user->role_id == $request->input('role_id')){
 
-        // $user->update($credentials);
+                return back()->withInput(['role_id'])->withErrors([
+                    'role_id' => 'The role id has already been taken.'
+                ]);
+            }
 
+            if ($user->isBlocked == 1) {
 
-        // session()->flash('success');
+                // $user->role_id = true;
 
-        // return back();
+                // $user->save();
+
+                session()->flash('error');
+
+                return back();
+
+            } else {
+
+                $user->role_id = $request->input('role_id');
+
+                $user->save();
+
+                session()->flash('success');
+
+                return back();
+            }
+        }
+
     }
 
     /**

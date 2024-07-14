@@ -96,7 +96,6 @@
         </div>
     </div>
 
-
     {{-- @if (session()->has('success'))
         <div class="alert alert-success" role="alert">
             {{ session()->get('success') }}
@@ -114,7 +113,23 @@
         $sessionStatusError = session()->has('error');
     @endphp
 
-    {{-- <div @class([
+    <style>
+        /* Style Css pour le Toast ... Animation 7s */
+        .toast.show {
+            opacity: 1;
+            transition: opacity 2s ease-in-out;
+            animation: fadeOut 1s forwards;
+            animation-delay: 7s;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <div @class([
         'bs-toast toast toast-placement-ex m-2 fade bg-success top-0 end-0',
         'show' => $sessionStatusSuccess,
     ]) role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
@@ -125,27 +140,27 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">L'operation s'est deroule avec success</div>
-    </div> --}}
+    </div>
 
-    {{-- <div @class([
+    <div @class([
         'bs-toast toast toast-placement-ex m-2 fade bg-danger top-0 end-0 hide',
         'show' => $sessionStatusError,
     ]) role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
         <div class="toast-header">
             <i class="bx bx-bell me-2"></i>
-            <div class="me-auto fw-semibold">Operation Succesful</div>
+            <div class="me-auto fw-semibold">Operation Denied</div>
             <small>11 mins ago</small>
             <small id="current-time"></small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body">L'operation s'est deroule avec success</div>
-    </div> --}}
+        <div class="toast-body">Impossible d'effectuer l'operation</div>
+    </div>
 
     {{-- @component('components.alert', [
-        'type' => 'success',
-        'sessionStatus' => true,
-        'title' => 'Operation Succesful',
-    ])
+    'type' => 'success',
+    'sessionStatus' => true,
+    'title' => 'Operation Succesful',
+])
        L'operation s'est deroule avec success
     @endcomponent --}}
 

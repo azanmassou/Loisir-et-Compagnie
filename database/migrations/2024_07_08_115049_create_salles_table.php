@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('TypeSalle');
             $table->integer('Capacite');
-            $table->integer('representation_id');
+            $table->integer('representation_id')->nullable();
             $table->timestamps();
         });
     }

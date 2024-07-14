@@ -15,7 +15,7 @@ class SalleController extends Controller
     public function index()
     {
         //
-        $salles = Salle::orderByDesc('created_at')->paginate(3);
+        $salles = Salle::orderByDesc('created_at')->paginate(5);
 
         $auth = Auth::user();
 

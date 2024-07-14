@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Role>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Spectacle>
  */
-class RoleFactory extends Factory
+class SpectacleFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +18,8 @@ class RoleFactory extends Factory
     {
         return [
             //
-            'name' => fake()->name(),
-            'created_at' => now(),
-
+             //
+             'NomSpectacle' => fake()->name(),
         ];
     }
 }

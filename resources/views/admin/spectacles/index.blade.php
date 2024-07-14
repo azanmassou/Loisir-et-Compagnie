@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('titles')
-    Roles
+    Spectacle
 @endsection
 
 @section('title')
@@ -9,9 +9,8 @@
 @endsection
 
 @section('links')
-    {{ $roles->links() }}
+    {{ $spectacles->links() }}
 @endsection
-
 
 @section('dropdown-li')
     <li>
@@ -25,11 +24,11 @@
     {{-- <li>
         <hr class="dropdown-divider">
     </li> --}}
-    <li>
+    {{-- <li>
         <button class="dropdown-item">
-            <a href="{{ route('roles.create') }}">Ajouter</a>
+            <a href="{{ route('salles.create') }}">Ajouter</a>
         </button>
-    </li>
+    </li> --}}
     {{-- <li>
         <button type="button" class="dropdown-item" data-bs-toggle="modal"
             data-bs-target="#modalCenter">
@@ -39,94 +38,102 @@
 @endsection
 
 @section('contents')
-
     {{-- Table dark --}}
     <div class="card">
         <div class="row">
             <div class="col-lg-6">
-                <h5 class="card-header">Total Roles <span @style('color:red')>{{ $countRoles }}</span><a class="mx-4"
-                        href="{{ route('roles.create') }}">Ajouter</a></h5>
+                <h5 class="card-header">Total Spectacles <span @style('color:red')>{{ $countSpectacle }}</span><a class="mx-4" href="{{ route('salles.create') }}">Ajouter</a></h5>
             </div>
-            <div class="col-lg-6">
-                @include('includes.dropdown')
+            <div class="col-lg-6 text-end">
+               {{-- @component('components.dropdown')
+                   
+               @endcomponent --}}
             </div>
         </div>
-        @if ($roles->isEmpty())
-            <div class="container-fluid ">
-                <div class="alert alert-warning" role="alert">Oups .... La liste des roles est vide — Reesayer !
-                    {{-- <a href="">Ajouter un Role</a> --}}
+
+
+        @if ($spectacles->isEmpty())
+            {{-- <div class="container-fluid ">
+                @yield('add-llink')
+                <div class="alert alert-warning" role="alert">Oups .... La liste des salles est vide — Reesayer !
                 </div>
-            </div>
+            </div> --}}
         @else
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
-                            <th>Role</th>
-                            <th>Color</th>
-                            <th>Utilisteurs</th>
+                            <th>TypeSalle</th>
+                            <th>Capacite</th>
+                            {{-- <th>created Date</th> --}}
+                            {{-- <th>Status</th> --}}
                             <th>created Date</th>
-                            {{-- <th><span>Actions</span></th> --}}
+                            {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($roles as $role)
+                        @foreach ($spectacles as $spectacle)
                             <tr>
                                 <td>
-                                    {{ $role->id }}
+                                    {{ $spectacle->id }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('roles.show', ['role' => $role->id]) }}">
-                                        <span @class([
-                                            'badge me-1',
-                                            $role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
-                                        ])>
-                                            {{ $role->name }}
-                                        </span>
-                                    </a>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-xs pull-up">
+                                            <img src="{{ asset('admin/assets/img/avatars/5.png') }}" alt="Avatar"
+                                                class="rounded-circle">
+                                        </div>
+                                        <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><a
+                                                href="{{ route('spectacles.show', ['spectacle' => $spectacle->id]) }}">{{ $spectacle->NomSpectacle }}</a></strong>
+                                    </div>
                                 </td>
+                                <td>{{ $spectacle->id }}</td>
+                                {{-- <td>
+                                    {{ $user->created_at->diffForHumans() }}
+                                </td> --}}
+
+                                {{-- <td><span @class([
+                                    'badge me-1',
+                                    'bg-label-success' => $user->email_verified_at != null,
+                                    'bg-label-danger' => ($user->email_verified_at = null),
+                                    'bg-label-default' => ($user->email_verified_at = null),
+                                ])>
+                                        @if ($user->email_verified_at != null)
+                                            Active
+                                        @else
+                                            Inactive
+                                        @endif
+                                    </span>
+                                </td> --}}
+                                {{-- @dd($user->role->name) --}}
                                 <td>
-                                    {{-- <a href="{{ route('roles.show', ['role' => $role->id]) }}">
-                                        <span @class([
-                                            'badge me-1',
-                                            $role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
-                                        ])>
-                                            {{ $role->name == 'admin' ? 'success' : 'warning' }}
-                                        </span>
-                                    </a> --}}
-                                </td>
-                                <td>
-                                    <a href="{{ route('roles.users', ['role' => $role->id]) }}">{{$role->user()->count()}} Details</a>
-                                </td>
-                                <td>
-                                    {{ $role->created_at->diffForHumans() }}
+                                    {{-- <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="{{ route('users.edit', ['user' => $user->id]) }}"><i
+                                                    class="bx bx-edit-alt me-1"></i>
+                                                Edit</a>
+                                            <a class="dropdown-item"
+                                                href=""><i
+                                                    class="bx bxl-500px mb-2"></i>
+                                                Block</a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('users.destroy', ['user' => $user->id]) }}"><i
+                                                    class="bx bx-trash me-1"></i>
+                                                Delete</a>
+                                        </div>
+                                    </div> --}}
+                                    {{ $spectacle->created_at->diffForHumans() }}
                                 </td>
                                 {{-- <td>
-                                    <div class="d-flex">
-                                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modalCenter">
-                                            <i class="bx bx-edit-alt me-1"></i>
-                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modalCenter">
-                                                <i class="bx bx-trash me-1"></i>
-                                    </div>
+
                                 </td> --}}
-                                {{-- @section('modal-content')
-                                    <form action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                    </form>
-                                @endsection --}}
                             </tr>
-                            {{-- @section('modal-content')
-                                <form action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="post">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                </form>
-                            @endsection --}}
                         @endforeach
                     </tbody>
                 </table>
@@ -191,8 +198,6 @@
             </div>
         </div>
     </div>
-
-    @include('includes.modal')
 
 @endsection
 

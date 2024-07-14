@@ -44,20 +44,20 @@
             <div class="col-lg-6">
                 <h5 class="card-header">Total Salles <span @style('color:red')>{{ $countSalles }}</span><a class="mx-4" href="{{ route('salles.create') }}">Ajouter</a></h5>
             </div>
-            <div class="col-lg-6">
-               @component('components.dropdown')
+            <div class="col-lg-6 text-end">
+               {{-- @component('components.dropdown')
                    
-               @endcomponent
+               @endcomponent --}}
             </div>
         </div>
 
 
         @if ($salles->isEmpty())
-            {{-- <div class="container-fluid ">
+            <div class="container-fluid ">
                 @yield('add-llink')
                 <div class="alert alert-warning" role="alert">Oups .... La liste des salles est vide — Reesayer !
                 </div>
-            </div> --}}
+            </div>
         @else
             <div class="table-responsive text-nowrap">
                 <table class="table">
@@ -66,7 +66,7 @@
                             <th>#</th>
                             <th>TypeSalle</th>
                             <th>Capacite</th>
-                            {{-- <th>created Date</th> --}}
+                            <th>Representation</th>
                             {{-- <th>Status</th> --}}
                             <th>created Date</th>
                             {{-- <th>Action</th> --}}
@@ -89,10 +89,9 @@
                                     </div>
                                 </td>
                                 <td>{{ $salle->Capacite }}</td>
-                                {{-- <td>
-                                    {{ $user->created_at->diffForHumans() }}
-                                </td> --}}
-
+                                <td>
+                                    {{ $salle->representation }}
+                                </td>
                                 {{-- <td><span @class([
                                     'badge me-1',
                                     'bg-label-success' => $user->email_verified_at != null,

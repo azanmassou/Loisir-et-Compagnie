@@ -42,13 +42,13 @@
     <div class="card">
         <div class="row">
             <div class="col-lg-6">
-                <h5 class="card-header">Total Users <span @style('color:red')>{{ $role->user()->count() }}</span></h5>
+                <h5 class="card-header">Total {{ $role->name}} <span @style('color:red')>{{ $role->user()->count() }}</span></h5>
             </div>
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6 text-end">
                @component('components.dropdown')
                    
                @endcomponent
-            </div>
+            </div> --}}
         </div>
 
 

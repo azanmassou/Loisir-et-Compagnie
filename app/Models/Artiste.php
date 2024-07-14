@@ -11,7 +11,7 @@ class Artiste extends Model
 {
     use HasFactory;
 
-    public function spectacles(): BelongsTo
+    public function spectacle(): BelongsTo
     {
         return $this->belongsTo(Spectacle::class);
     }
