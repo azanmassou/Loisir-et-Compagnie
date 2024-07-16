@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('ticket_representation', function (Blueprint $table) {
             $table->integer('ticket_id');
             $table->integer('representation_id');
+            $table->integer('Nbticket')->default(0);
+            $table->integer('Montant')->default(0);
             $table->timestamps();
         });
     }

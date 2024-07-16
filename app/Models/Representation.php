@@ -18,16 +18,18 @@ class Representation extends Model
 
     public function spectacles() : BelongsToMany
     {
-        return $this->BelongsToMany(Spectacle::class);
+        return $this->BelongsToMany(Spectacle::class,'representation_spectacle')->withTimestamps();
     }
     public function artists() : BelongsToMany
     {
         return $this->BelongsToMany(Artiste::class);
     }
 
-    public function tickets() : BelongsToMany
+    public function tickets()
     {
-        return $this->BelongsToMany(Ticket::class);
+        return $this->belongsToMany(Ticket::class, 'ticket_representation')
+        ->withPivot('Nbticket','Montant')
+                    ->withTimestamps();
     }
 
 }

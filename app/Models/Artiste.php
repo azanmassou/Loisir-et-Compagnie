@@ -11,6 +11,11 @@ class Artiste extends Model
 {
     use HasFactory;
 
+    protected $fillable =
+    [
+        'spectacle_id'
+    ];
+
     public function spectacle(): BelongsTo
     {
         return $this->belongsTo(Spectacle::class);

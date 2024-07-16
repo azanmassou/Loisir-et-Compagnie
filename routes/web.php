@@ -9,6 +9,7 @@ use App\Http\Controllers\SalleController;
 use App\Http\Controllers\SpectacleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\Spectacle;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
    $auth = Auth::user();
-    return view('includes.blank',compact('auth'));
+    return view('welcome',compact('auth'));
+});
+
+Route::get('/home', function () {
+    $spectacles = Spectacle::with('representations')->paginate(6);
+    // dd($spectacles);
+   $auth = Auth::user();
+    return view('index',compact('auth','spectacles'));
 });
 
 // Admin routes

@@ -19,7 +19,7 @@ class SpectacleFactory extends Factory
         return [
             //
              //
-             'NomSpectacle' => fake()->name(),
+             'NomSpectacle' => fake()->sentence(),
         ];
     }
 }

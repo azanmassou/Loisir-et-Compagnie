@@ -64,7 +64,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
-                            <th>TypeSalle</th>
+                            <th>NomArtiste</th>
                             <th>Spectacle</th>
                             {{-- <th>created Date</th> --}}
                             {{-- <th>Status</th> --}}
@@ -88,7 +88,9 @@
                                                 href="{{ route('artistes.show', ['artiste' => $artiste->id]) }}">{{ $artiste->NomArtiste }}</a></strong>
                                     </div>
                                 </td>
-                                <td>{{ $artiste->spectacle_id }}</td>
+                                <td>
+                                    <a href="{{route('artistes.show',['artiste' => $artiste->spectacle->id])}}">{{ $artiste->spectacle->NomSpectacle }}</a>
+                                </td>
                                 {{-- <td>
                                     {{ $user->created_at->diffForHumans() }}
                                 </td> --}}

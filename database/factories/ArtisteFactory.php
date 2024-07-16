@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Spectacle;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class ArtisteFactory extends Factory
         return [
             //
             'NomArtiste' => fake()->name(),
-            'spectacle_id' => fake()->numberBetween(1,5),
+            'spectacle_id' => Spectacle::factory(),
         ];
     }
 }

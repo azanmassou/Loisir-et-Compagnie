@@ -17,6 +17,6 @@ class Spectacle extends Model
     }
     public function representations() : BelongsToMany
     {
-        return $this->BelongsToMany(Spectacle::class);
+        return $this->BelongsToMany(Spectacle::class,'representation_spectacle')->withTimestamps();
     }
 }

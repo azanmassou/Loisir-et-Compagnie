@@ -18,8 +18,10 @@ class Salle extends Model
         'representation_id'
     ];
 
+
     public function representation(): BelongsTo
     {
         return $this->belongsTo(Representation::class);
     }
+    
 }

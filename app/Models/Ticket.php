@@ -10,8 +10,15 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    public function representations() : BelongsToMany
+    protected $fillable = [
+        'Libelle', // Ex: Réservation, Place assise, Place debout, etc.
+        'Montant', // Prix du ticket pour ce type
+    ];
+
+    public function representations()
     {
-        return $this->BelongsToMany(Spectacle::class);
+        return $this->belongsToMany(Representation::class, 'ticket_representation')
+        ->withPivot('Nbticket','Montant')
+                    ->withTimestamps();
     }
 }

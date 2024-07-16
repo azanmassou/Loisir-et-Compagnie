@@ -18,6 +18,7 @@ class RepresentationFactory extends Factory
     {
         return [
             //
+            'NomRepresentation' => fake()->name(),
             'DateRepresentation' => fake()->date(),
             'HdebRepresentation' => fake()->time('H:i:s','now'),
             'HfinRepresentation' => fake()->time('H:i:s','now'),

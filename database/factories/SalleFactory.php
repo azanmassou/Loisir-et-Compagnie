@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Representation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,9 +19,9 @@ class SalleFactory extends Factory
     {
         return [
             //
-            'TypeSalle' => fake()->name(),
+            'TypeSalle' => fake()->company(),
             'Capacite' => fake()->numberBetween(500,10000),
-            // 'representation_id' => fake()->numberBetween(1,5),
+            'representation_id' => Representation::factory(),
         ];
     }
 }

@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Spectacle::factory(7)->create();
 
 
-
         \App\Models\Role::factory()->create([
             'name' => 'admin',
         ]);
@@ -47,5 +46,11 @@ class DatabaseSeeder extends Seeder
             'role_id' => 2,
             
         ]);
+        
+        $this->call([
+            TicketRepresentationSeeder::class,
+        ]);
+
+
     }
 }

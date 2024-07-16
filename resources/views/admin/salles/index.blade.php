@@ -90,7 +90,7 @@
                                 </td>
                                 <td>{{ $salle->Capacite }}</td>
                                 <td>
-                                    {{ $salle->representation }}
+                                    <a href="{{route('representations.show',['representation' => $salle->representation->id])}}">{{ $salle->representation->NomRepresentation }}</a>
                                 </td>
                                 {{-- <td><span @class([
                                     'badge me-1',

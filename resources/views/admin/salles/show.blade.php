@@ -190,7 +190,6 @@
 
 
 @section('contents')
-
     @include('includes.profile')
 
     <div class="row my-4">
@@ -200,8 +199,8 @@
                     {{-- <h5>Edit Role</h5> --}}
                 </div>
                 <div class="card-body">
-                    <form id="formAuthentication" class="mb-3" action="{{ route('salles.update', ['salle' => $salle->id]) }}"
-                        method="POST">
+                    <form id="formAuthentication" class="mb-3"
+                        action="{{ route('salles.update', ['salle' => $salle->id]) }}" method="POST">
                         @method('PATCH')
                         @csrf
                         <div class="mb-3">
@@ -225,6 +224,31 @@
             </div>
         </div>
     </div>
+
+    {{-- <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1 class="display-4">{{ $salle->name }}</h1>
+            <p class="lead">Capacity: {{ $salle->capacity }}</p>
+        </div>
+        <div class="row">
+            @foreach ($salle->representations as $representation)
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="{{ $representation->spectacle->image_url }}" class="card-img-top"
+                            alt="{{ $representation->spectacle->name }}">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ $representation->spectacle->name }}</h5>
+                            <p class="card-text text-center">{{ $representation->date->format('d M Y H:i') }}</p>
+                            <div class="d-flex justify-content-center">
+                                <a href="#" class="btn btn-outline-primary me-2">Voir plus</a>
+                                <a href="#" class="btn btn-outline-secondary">Réserver</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div> --}}
 
     @include('includes/modal')
 @endsection

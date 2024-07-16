@@ -59,7 +59,6 @@ class SalleController extends Controller
     public function show(Salle $salle)
     {
         //
-
         $auth = Auth::user();
 
         return view('admin.salles.show', compact('salle', 'auth'));

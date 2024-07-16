@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('representations', function (Blueprint $table) {
             $table->id();
+            $table->string('NomRepresentation');
             $table->date('DateRepresentation');
             $table->time('HdebRepresentation');
             $table->time('HfinRepresentation');
