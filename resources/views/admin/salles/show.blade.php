@@ -50,16 +50,6 @@
 @endsection
 
 @section('profile-line')
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="false">About</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="true">Timeline</a>
-        </li>
-    </ul>
 @endsection
 
 @section('profile-left')
@@ -78,112 +68,36 @@
 @endsection
 
 @section('profile-data')
-    {{-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="row">
-            <div class="col-md-6">
-                <label>User Id</label>
-            </div>
-            <div class="col-md-6">
-                <p>@yield('user-id')</p>
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Capacite</label>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Username</label>
-            </div>
-            <div class="col-md-6">
-                <p>@yield('user-username')</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Email</label>
-            </div>
-            <div class="col-md-6">
-                <p>@yield('user-email')</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Phone</label>
-            </div>
-            <div class="col-md-6">
-                <p>123 456 7890</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Profession</label>
-            </div>
-            <div class="col-md-6">
-                <p>Web Developer and Designer</p>
-            </div>
+        <div class="col-md-6">
+            <p>{{ $salle->Capacite }}</p>
         </div>
     </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+    @if ($salle->representation)
         <div class="row">
             <div class="col-md-6">
-                <label>Experience</label>
+                <label>Representation</label>
             </div>
             <div class="col-md-6">
-                <p>Expert</p>
+                <p> <a
+                        href="{{ route('representations.show', ['representation' => $salle->representation->id]) }}">{{ $salle->representation->NomRepresentation }}</a>
+                </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Hourly Rate</label>
-            </div>
-            <div class="col-md-6">
-                <p>10$/hr</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Total Projects</label>
-            </div>
-            <div class="col-md-6">
-                <p>230</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>English Level</label>
-            </div>
-            <div class="col-md-6">
-                <p>Expert</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Availability</label>
-            </div>
-            <div class="col-md-6">
-                <p>6 months</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label>Your Bio</label><br />
-                <p>Your detail description</p>
-            </div>
-        </div>
-    </div> --}}
+    @endif
 @endsection
 
 @section('dropdown-li')
-    <li>
-        <form action="{{ route('salles.edit', ['salle' => $salle->id]) }}" method="post">
-            @method('PATCH')
-            @csrf
-            <button class="dropdown-item" type="submit"><i class="bx bx-edit-alt me-1"></i>Edit</button>
-        </form>
-    </li>
-    <li>
+    {{-- <li>
         <hr class="dropdown-divider">
-    </li>
+    </li> --}}
     <li>
-        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalCenter">
-            <i class="bx bx-trash me-1"></i> Delete
+        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+            Delete
         </button>
     </li>
 @endsection
@@ -192,65 +106,51 @@
 @section('contents')
     @include('includes.profile')
 
-    <div class="row my-4">
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    {{-- <h5>Edit Role</h5> --}}
-                </div>
-                <div class="card-body">
-                    <form id="formAuthentication" class="mb-3"
-                        action="{{ route('salles.update', ['salle' => $salle->id]) }}" method="POST">
-                        @method('PATCH')
-                        @csrf
-                        <div class="mb-3">
-                            <label for="role_id" class="form-label">Change Role</label>
-                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" name="role_id"
-                                required>
-                                {{-- <option value="" selected disabled>-- Sélectionnez un rôle --</option> --}}
-                                {{-- @foreach ($salles as $salle)
-                                    <option value="{{ $role->id }}"
-                                        {{ $role->id == $user->role->id ? 'selected' : '' }}>
-                                        {{ $role->name }}</option>
-                                @endforeach --}}
-                            </select>
-                            @error('role_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <button class="btn btn-primary d-grid w-100">Change Role</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @component('components.modal', [
+        'id' => 'exampleModal1',
+        'title' => 'Confirmation Operation',
+    ])
+        <p>Etes vous sur de bien vouloir continuer</p>
+        @slot('footer')
+            <form action="{{ route('salles.destroy', ['salle' => $salle->id]) }}" method="post">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        @endslot
+    @endcomponent
 
-    {{-- <div class="container mt-5">
-        <div class="text-center mb-4">
-            <h1 class="display-4">{{ $salle->name }}</h1>
-            <p class="lead">Capacity: {{ $salle->capacity }}</p>
-        </div>
-        <div class="row">
-            @foreach ($salle->representations as $representation)
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="{{ $representation->spectacle->image_url }}" class="card-img-top"
-                            alt="{{ $representation->spectacle->name }}">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ $representation->spectacle->name }}</h5>
-                            <p class="card-text text-center">{{ $representation->date->format('d M Y H:i') }}</p>
-                            <div class="d-flex justify-content-center">
-                                <a href="#" class="btn btn-outline-primary me-2">Voir plus</a>
-                                <a href="#" class="btn btn-outline-secondary">Réserver</a>
-                            </div>
+    <div class="card">
+        <div id="responseMessage" class="mt-3"></div>
+        <div class="card-body">
+            <form id="AddRoleForm" class="mb-3" method="POST"
+                action="{{ route('salles.update', ['salle' => $salle->id]) }}">
+                @method('PATCH')
+                @csrf
+                <div class="mb-3">
+                    <label for="TypeSalle" class="form-label">TypeSalle</label>
+                    <input type="text" class="form-control @error('TypeSalle') is-invalid @enderror" id="TypeSalle"
+                        name="TypeSalle" placeholder="Enter your TypeSalle"
+                        value="{{ old('TypeSalle') ?? $salle->TypeSalle }}" autofocus required />
+                    <div id="TypeSalle" class="invalid-feedback">
+                        {{ $errors->first('TypeSalle') }}
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="Capacite" class="col-md-2 col-form-label">Cap</label>
+                    <div class="col-md-10">
+                        <input class="form-control @error('Capacite') is-invalid @enderror" name="Capacite" type="number"
+                            value="{{ old('Capacite') ?? $salle->Capacite }}" id="Capacite"
+                            placeholder="Enter capacity of salle">
+                        <div id="Capacite" class="invalid-feedback">
+                            {{ $errors->first('Capacite') }}
                         </div>
                     </div>
                 </div>
-            @endforeach
+                <button type="submit" class="btn btn-primary d-grid w-100">Edit</button>
+            </form>
         </div>
-    </div> --}}
-
-    @include('includes/modal')
+    </div>
 @endsection
 
 @section('content')

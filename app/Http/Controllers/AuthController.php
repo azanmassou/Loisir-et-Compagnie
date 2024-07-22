@@ -91,11 +91,17 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
-            // if ($user->role->name === 'admin') {
+            if ($user->role->name === 'admin') {
 
-            //     return redirect()->intended(route('admin.dashbord'));
+                return redirect()->intended(route('admin.dashbord'));
+            }
+
+            // if ($user->role->name === 'user') {
+
+            //     return redirect()->intended(route('user.dashbord'));
             // }
-            return redirect()->intended(route('admin.dashbord'));
+
+            // return redirect()->intended(route('admin.dashbord'));
         }
 
         return to_route('auth.login')->withErrors([

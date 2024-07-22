@@ -65,7 +65,7 @@
                             <th>#</th>
                             <th>Role</th>
                             <th>Color</th>
-                            <th>Utilisteurs</th>
+                            {{-- <th>Utilisteurs</th> --}}
                             <th>created Date</th>
                             {{-- <th><span>Actions</span></th> --}}
                         </tr>
@@ -78,27 +78,23 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('roles.show', ['role' => $role->id]) }}">
-                                        <span @class([
-                                            'badge me-1',
-                                            $role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
-                                        ])>
-                                            {{ $role->name }}
-                                        </span>
+                                        {{ $role->name }}
                                     </a>
                                 </td>
                                 <td>
-                                    {{-- <a href="{{ route('roles.show', ['role' => $role->id]) }}">
+                                    <a href="{{ route('roles.show', ['role' => $role->id]) }}">
                                         <span @class([
                                             'badge me-1',
                                             $role->name == 'admin' ? 'bg-label-success' : 'bg-label-warning',
                                         ])>
                                             {{ $role->name == 'admin' ? 'success' : 'warning' }}
                                         </span>
-                                    </a> --}}
+                                    </a>
                                 </td>
-                                <td>
-                                    <a href="{{ route('roles.users', ['role' => $role->id]) }}">{{$role->user()->count()}} Details</a>
-                                </td>
+                                {{-- <td>
+                                    <span  @style('color:red')>{{$role->user()->count()}}</span>
+                                    <a href="{{ route('roles.users', ['role' => $role->id]) }}">Liste (s)</a>
+                                </td> --}}
                                 <td>
                                     {{ $role->created_at->diffForHumans() }}
                                 </td>

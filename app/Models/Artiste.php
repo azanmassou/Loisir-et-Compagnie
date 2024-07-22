@@ -13,6 +13,7 @@ class Artiste extends Model
 
     protected $fillable =
     [
+        'NomArtiste',
         'spectacle_id'
     ];
 

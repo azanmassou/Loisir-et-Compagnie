@@ -37,20 +37,19 @@ class DatabaseSeeder extends Seeder
             'username' => 'Happy',
             'email' => 'azanmassouhappylouis@gmail.com',
             'role_id' => 1,
-            
+
         ]);
 
         \App\Models\User::factory()->create([
             'username' => 'Louis',
             'email' => 'azanmassouhappy@gmail.com',
             'role_id' => 2,
-            
+
         ]);
-        
+
         $this->call([
             TicketRepresentationSeeder::class,
+            SpectacleRepresentationSeeder::class,
         ]);
-
-
     }
 }

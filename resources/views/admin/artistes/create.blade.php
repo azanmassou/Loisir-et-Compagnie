@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('titles')
-    Create Salle
+    Create Artiste
 @endsection
 
 @section('title')
@@ -10,34 +10,44 @@
 
 @section('contents')
     
-<div class="col-lg-6">
+<div class="col-lg-12">
     <div class="card">
         <div id="responseMessage" class="mt-3"></div>
         <div class="card-body">
-            <form id="AddRoleForm" class="mb-3" method="POST" action="{{route('salles.store')}}">
+            <form id="AddRoleForm" class="mb-3" method="POST"
+                action="{{ route('artistes.store') }}">
                 @csrf
                 <div class="mb-3">
-                    <label for="TypeSalle" class="form-label">TypeSalle</label>
-                    <input type="text" class="form-control @error('TypeSalle') is-invalid @enderror" id="TypeSalle"
-                        name="TypeSalle" placeholder="Enter your TypeSalle" value="{{ old('TypeSalle') }}" autofocus
-                        required />
-                    <div id="TypeSalle" class="invalid-feedback">
-                        {{ $errors->first('TypeSalle') }}
+                    <label for="NomArtiste" class="form-label">NomArtiste</label>
+                    <input type="text" class="form-control @error('NomArtiste') is-invalid @enderror" id="NomArtiste"
+                        name="NomArtiste" placeholder="Enter your NomArtiste"
+                        value="{{ old('NomArtiste')}}" autofocus required />
+                    <div id="NomArtiste" class="invalid-feedback">
+                        {{ $errors->first('NomArtiste') }}
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label for="Capacite" class="col-md-2 col-form-label">Cap</label>
-                    <div class="col-md-10">
-                      <input class="form-control @error('Capacite') is-invalid @enderror" name="Capacite" type="number" value="{{old('Capacite')}}" id="Capacite" placeholder="Enter capacity of salle">
-                      <div id="Capacite" class="invalid-feedback">
-                        {{ $errors->first('Capacite') }}
+
+                {{-- <div class="mb-3">
+                    <label for="spectacle_id" class="form-label">Spectacle</label>
+                    <select id="spectacle_id" name="spectacle_id" class="form-select @error('spectacle_id') is-invalid @enderror">
+                        @foreach ($spectacles as $spectacle)
+                            <option value="{{ $spectacle->id }}" {{ $artiste->spectacle->id == $spectacle->id ? 'selected' : '' }}>
+                                {{ $spectacle->NomSpectacle }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div id="spectacle_id" class="invalid-feedback">
+                        {{ $errors->first('spectacle_id') }}
                     </div>
-                    </div>
-                  </div>
-                <button type="submit" class="btn btn-primary d-grid w-100">Add</button>
+                </div>
+                <div id="spectacle_id" class="invalid-feedback">
+                    {{ $errors->first('spectacle_id') }}
+                </div> --}}
+                <button type="submit" class="btn btn-primary d-grid w-100">Create</button>
             </form>
         </div>
     </div>
+    
 </div>
 @endsection
 

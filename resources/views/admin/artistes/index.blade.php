@@ -65,7 +65,7 @@
                         <tr>
                             <th>#</th>
                             <th>NomArtiste</th>
-                            <th>Spectacle</th>
+                            {{-- <th>Spectacle</th> --}}
                             {{-- <th>created Date</th> --}}
                             {{-- <th>Status</th> --}}
                             <th>created Date</th>
@@ -88,9 +88,9 @@
                                                 href="{{ route('artistes.show', ['artiste' => $artiste->id]) }}">{{ $artiste->NomArtiste }}</a></strong>
                                     </div>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <a href="{{route('artistes.show',['artiste' => $artiste->spectacle->id])}}">{{ $artiste->spectacle->NomSpectacle }}</a>
-                                </td>
+                                </td> --}}
                                 {{-- <td>
                                     {{ $user->created_at->diffForHumans() }}
                                 </td> --}}
@@ -110,31 +110,8 @@
                                 </td> --}}
                                 {{-- @dd($user->role->name) --}}
                                 <td>
-                                    {{-- <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item"
-                                                href="{{ route('users.edit', ['user' => $user->id]) }}"><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</a>
-                                            <a class="dropdown-item"
-                                                href=""><i
-                                                    class="bx bxl-500px mb-2"></i>
-                                                Block</a>
-                                            <a class="dropdown-item"
-                                                href="{{ route('users.destroy', ['user' => $user->id]) }}"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
-                                        </div>
-                                    </div> --}}
                                     {{ $artiste->created_at->diffForHumans() }}
                                 </td>
-                                {{-- <td>
-
-                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

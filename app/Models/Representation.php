@@ -16,10 +16,6 @@ class Representation extends Model
         return $this->hasMany(Salle::class);
     }
 
-    public function spectacles() : BelongsToMany
-    {
-        return $this->BelongsToMany(Spectacle::class,'representation_spectacle')->withTimestamps();
-    }
     public function artists() : BelongsToMany
     {
         return $this->BelongsToMany(Artiste::class);
@@ -29,6 +25,12 @@ class Representation extends Model
     {
         return $this->belongsToMany(Ticket::class, 'ticket_representation')
         ->withPivot('Nbticket','Montant')
+                    ->withTimestamps();
+    }
+    public function spectacles()
+
+    {
+        return $this->belongsToMany(Spectacle::class, 'representation_spectacle')
                     ->withTimestamps();
     }
 

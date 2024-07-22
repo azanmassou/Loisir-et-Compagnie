@@ -11,12 +11,15 @@ class Spectacle extends Model
 {
     use HasFactory;
 
-    public function artistes() : HasMany
+    public function artistes(): HasMany
     {
         return $this->hasMany(Artiste::class);
     }
-    public function representations() : BelongsToMany
+
+    public function representations()
+
     {
-        return $this->BelongsToMany(Spectacle::class,'representation_spectacle')->withTimestamps();
+        return $this->belongsToMany(Representation::class, 'representation_spectacle')
+            ->withTimestamps();
     }
 }

@@ -4,11 +4,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArtisteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RepresentationController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\SpectacleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\Reservation;
+use App\Models\Salle;
 use App\Models\Spectacle;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,22 +30,22 @@ use Illuminate\Support\Facades\Route;
 // Generiques Routes
 
 Route::get('/', function () {
-   $auth = Auth::user();
-    return view('welcome',compact('auth'));
+    $auth = Auth::user();
+    return view('welcome', compact('auth'));
 });
 
-Route::get('/home', function () {
-    $spectacles = Spectacle::with('representations')->paginate(6);
-    // dd($spectacles);
-   $auth = Auth::user();
-    return view('index',compact('auth','spectacles'));
-});
+// Route::get('/home', function () {
+//     $salles = Salle::paginate(3);
+//     $auth = Auth::user();
+//     return view('index', compact('auth','salles'));
+// });
 
 // Admin routes
 
 Route::middleware(['auth', 'activity'])->group(function () {
 
-    Route::get('/dashbord', [AdminController::class, 'index'])->name('admin.dashbord');
+    Route::get('/dashbord', [AdminController::class, 'admin'])->name('admin.dashbord');
+    // Route::get('/home', [AdminController::class, 'user'])->name('user.dashbord');
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
@@ -58,9 +61,20 @@ Route::middleware(['auth', 'activity'])->group(function () {
         Route::resource('representations', RepresentationController::class);
         Route::resource('artistes', ArtisteController::class);
         Route::resource('tickets', TicketController::class);
+        Route::resource('reservations', ReservationController::class);
+        Route::get('/reservations{salle}', [ReservationController::class, 'newReservation'])->name('new.reservation');
+       
+       
         // Route::get('/dashbord', [AdminController::class, 'index'])->name('admin.dashbord');
 
     });
+
+    // Route::middleware(['role:user'])->group(function () {
+       
+    //     Route::get('/home', [AdminController::class, 'user'])->name('user.dashbord');
+
+    // });
+
 });
 
 
@@ -73,7 +87,6 @@ Route::middleware(['guest'])->group(function () {
 
     Route::get('/connexion', [AuthController::class, 'login'])->name('auth.login');
     Route::post('/connexion', [AuthController::class, 'doLogin']);
-
 });
 
 

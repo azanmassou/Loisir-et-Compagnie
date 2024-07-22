@@ -66,7 +66,7 @@
                             <th>#</th>
                             <th>TypeSalle</th>
                             <th>Capacite</th>
-                            <th>Representation</th>
+                            {{-- <th>Representation</th> --}}
                             {{-- <th>Status</th> --}}
                             <th>created Date</th>
                             {{-- <th>Action</th> --}}
@@ -89,9 +89,9 @@
                                     </div>
                                 </td>
                                 <td>{{ $salle->Capacite }}</td>
-                                <td>
+                                {{-- <td>
                                     <a href="{{route('representations.show',['representation' => $salle->representation->id])}}">{{ $salle->representation->NomRepresentation }}</a>
-                                </td>
+                                </td> --}}
                                 {{-- <td><span @class([
                                     'badge me-1',
                                     'bg-label-success' => $user->email_verified_at != null,

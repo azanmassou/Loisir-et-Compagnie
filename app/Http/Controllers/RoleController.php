@@ -103,7 +103,7 @@ class RoleController extends Controller
 
         session()->flash('success');
 
-        return to_route('roles.index');
+        return back();
     }
 
     /**

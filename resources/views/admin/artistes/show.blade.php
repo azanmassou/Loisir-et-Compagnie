@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('titles')
-    Salles
+    Artistes
 @endsection
 
 @section('title')
@@ -17,7 +17,7 @@
 @endsection
 
 @section('modal-content')
-    <form action="{{ route('salles.destroy', ['salle' => $salle->id]) }}" method="post">
+    <form action="{{ route('artistes.destroy', ['artiste' => $artiste->id]) }}" method="post">
         @method('DELETE')
         @csrf
         <button class="btn btn-danger" type="submit">Delete</button>
@@ -25,11 +25,11 @@
 @endsection
 
 @section('profile-name')
-    {{ $salle->TypeSalle }}
+    {{ $artiste->NomArtiste }}
 @endsection
 
 @section('user-id')
-    {{ $salle->id }}
+    {{ $artiste->id }}
 @endsection
 
 {{-- @section('user-name')
@@ -50,16 +50,6 @@
 @endsection
 
 @section('profile-line')
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="false">About</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="true">Timeline</a>
-        </li>
-    </ul>
 @endsection
 
 @section('profile-left')
@@ -78,155 +68,98 @@
 @endsection
 
 @section('profile-data')
-    {{-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="row">
-            <div class="col-md-6">
-                <label>User Id</label>
-            </div>
-            <div class="col-md-6">
-                <p>@yield('user-id')</p>
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Id</label>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Username</label>
-            </div>
-            <div class="col-md-6">
-                <p>@yield('user-username')</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Email</label>
-            </div>
-            <div class="col-md-6">
-                <p>@yield('user-email')</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Phone</label>
-            </div>
-            <div class="col-md-6">
-                <p>123 456 7890</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Profession</label>
-            </div>
-            <div class="col-md-6">
-                <p>Web Developer and Designer</p>
-            </div>
+        <div class="col-md-6">
+            <p>{{ $artiste->id }}</p>
         </div>
     </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+    @if ($artiste->spectacle)
         <div class="row">
             <div class="col-md-6">
-                <label>Experience</label>
+                <label>Spectacle</label>
             </div>
             <div class="col-md-6">
-                <p>Expert</p>
+                <p> <a
+                        href="{{ route('spectacles.show', ['spectacle' => $artiste->spectacle->id]) }}">{{ $artiste->spectacle->NomSpectacle }}</a>
+                </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Hourly Rate</label>
-            </div>
-            <div class="col-md-6">
-                <p>10$/hr</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Total Projects</label>
-            </div>
-            <div class="col-md-6">
-                <p>230</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>English Level</label>
-            </div>
-            <div class="col-md-6">
-                <p>Expert</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Availability</label>
-            </div>
-            <div class="col-md-6">
-                <p>6 months</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label>Your Bio</label><br />
-                <p>Your detail description</p>
-            </div>
-        </div>
-    </div> --}}
+    @endif
 @endsection
 
 @section('dropdown-li')
-    <li>
-        <form action="{{ route('salles.edit', ['salle' => $salle->id]) }}" method="post">
-            @method('PATCH')
-            @csrf
-            <button class="dropdown-item" type="submit"><i class="bx bx-edit-alt me-1"></i>Edit</button>
-        </form>
-    </li>
-    <li>
+    {{-- <li>
         <hr class="dropdown-divider">
-    </li>
+    </li> --}}
     <li>
-        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalCenter">
-            <i class="bx bx-trash me-1"></i> Delete
+        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+            Delete
         </button>
     </li>
 @endsection
 
 
 @section('contents')
-
     @include('includes.profile')
 
-    <div class="row my-4">
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    {{-- <h5>Edit Role</h5> --}}
+    @component('components.modal', [
+        'id' => 'exampleModal1',
+        'title' => 'Confirmation Operation',
+    ])
+        <p>Etes vous sur de bien vouloir continuer</p>
+        @slot('footer')
+            <form action="{{ route('artistes.destroy', ['artiste' => $artiste->id]) }}" method="post">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        @endslot
+    @endcomponent
+
+    <div class="card">
+        <div id="responseMessage" class="mt-3"></div>
+        <div class="card-body">
+            <form id="AddRoleForm" class="mb-3" method="POST"
+                action="{{ route('artistes.update', ['artiste' => $artiste->id]) }}">
+                @method('PATCH')
+                @csrf
+                <div class="mb-3">
+                    <label for="NomArtiste" class="form-label">NomArtiste</label>
+                    <input type="text" class="form-control @error('NomArtiste') is-invalid @enderror" id="NomArtiste"
+                        name="NomArtiste" placeholder="Enter your NomArtiste"
+                        value="{{ old('NomArtiste') ?? $artiste->NomArtiste }}" autofocus required />
+                    <div id="NomArtiste" class="invalid-feedback">
+                        {{ $errors->first('NomArtiste') }}
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form id="formAuthentication" class="mb-3" action="{{ route('salles.update', ['salle' => $salle->id]) }}"
-                        method="POST">
-                        @method('PATCH')
-                        @csrf
-                        <div class="mb-3">
-                            <label for="role_id" class="form-label">Change Role</label>
-                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" name="role_id"
-                                required>
-                                {{-- <option value="" selected disabled>-- Sélectionnez un rôle --</option> --}}
-                                {{-- @foreach ($salles as $salle)
-                                    <option value="{{ $role->id }}"
-                                        {{ $role->id == $user->role->id ? 'selected' : '' }}>
-                                        {{ $role->name }}</option>
-                                @endforeach --}}
-                            </select>
-                            @error('role_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <button class="btn btn-primary d-grid w-100">Change Role</button>
-                    </form>
+
+               @if ($artiste->spectacle)
+               <div class="mb-3">
+                <label for="spectacle_id" class="form-label">Spectacle</label>
+                <select id="spectacle_id" name="spectacle_id" class="form-select @error('spectacle_id') is-invalid @enderror">
+                    @foreach ($spectacles as $spectacle)
+                        <option value="{{ $spectacle->id }}" {{ $artiste->spectacle->id == $spectacle->id ? 'selected' : '' }}>
+                            {{ $spectacle->NomSpectacle }}
+                        </option>
+                    @endforeach
+                </select>
+                <div id="spectacle_id" class="invalid-feedback">
+                    {{ $errors->first('spectacle_id') }}
                 </div>
             </div>
+            <div id="spectacle_id" class="invalid-feedback">
+                {{ $errors->first('spectacle_id') }}
+            </div>
+               @endif
+                <button type="submit" class="btn btn-primary d-grid w-100">Edit</button>
+            </form>
         </div>
     </div>
-
-    @include('includes/modal')
+    
 @endsection
 
 @section('content')

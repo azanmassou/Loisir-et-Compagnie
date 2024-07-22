@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSalleRequest;
+use App\Http\Requests\UpdateSalleRequest;
 use App\Models\Salle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class SalleController extends Controller
 
         $countSalles = Salle::count();
 
-        return view('admin.salles.index', compact('salles', 'auth','countSalles'));
+        return view('admin.salles.index', compact('salles', 'auth', 'countSalles'));
     }
     public function create()
     {
@@ -29,7 +30,6 @@ class SalleController extends Controller
         $auth = Auth::user();
 
         return view('admin.salles.create', compact('auth'));
-        
     }
 
     /**
@@ -42,15 +42,11 @@ class SalleController extends Controller
 
         $auth = Auth::user();
 
-        Salle::create($credentials);
-
-        $salles = Salle::orderByDesc('created_at')->paginate(3);
-
-        $countSalles = Salle::count();
+        $salle = Salle::create($credentials);
 
         session()->flash('success');
 
-        return view('admin.salles.index', compact('salles', 'auth','countSalles'));
+        return view('admin.salles.show', compact('salle', 'auth'));
     }
 
     /**
@@ -62,15 +58,21 @@ class SalleController extends Controller
         $auth = Auth::user();
 
         return view('admin.salles.show', compact('salle', 'auth'));
-
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Salle $salle)
+    public function update(UpdateSalleRequest $request, Salle $salle)
     {
         //
+        $credentials = $request->validated();
+
+        $salle->update($credentials);
+
+        session()->flash('success');
+
+        return back();
     }
 
     /**
@@ -79,5 +81,17 @@ class SalleController extends Controller
     public function destroy(Salle $salle)
     {
         //
+        if ($salle->representation()->count() > 0) {
+
+            session()->flash('error');
+
+            return back();
+        }
+
+        $salle->delete();
+
+        session()->flash('success');
+
+        return to_route('salles.index');
     }
 }
